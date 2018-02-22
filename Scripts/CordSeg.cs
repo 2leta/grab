@@ -54,7 +54,7 @@ public class CordSeg : MonoBehaviour {
 	{
 		Vector3 pos = grabber.transform.position;
 		// calculate the point on centre line of the capsule nearest to the player
-		Vector3 near = Brainiac.NearPointOnLine(start, end, pos);
+		Vector3 near = Linear.NearPointOnLine(start, end, pos);
 		return Vector3.Distance(near, pos);
 	}
 

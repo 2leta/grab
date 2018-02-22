@@ -9,8 +9,9 @@ using AssemblyCSharp;
 
 public class Hook : MonoBehaviour {
 
+	const float distanceLim = 1.5f; // distance at which player can interact with hooks
 	List<Cord> attached = new List<Cord>(); // lists all Cords attached to this Hook
-	GameObject grabber;
+	GameObject grabber; // GameObject in front of camera that holds cord when grabbed
 
 	void Start()
 	{
@@ -18,12 +19,12 @@ public class Hook : MonoBehaviour {
 	}
 
 	// manage attached cords
-	void Attach(Cord c)
+	public void Attach(Cord c)
 	{
 		attached.Add(c);
 	}
 
-	void Detach(Cord c)
+	public void Detach(Cord c)
 	{
 		attached.Remove(c);
 	}
@@ -33,7 +34,7 @@ public class Hook : MonoBehaviour {
 	{ 	
 		// test if a cord is being held, if player is close enough to interact,
 	  	// and that hooking the Cord here will be 'legal' (see ConflictTest() below)
-		if (Cord.grabbed && Vector3.Distance(grabber.transform.position,transform.position) < Cord.dist && !ConflictTest()) {
+		if (Cord.grabbed && Vector3.Distance(grabber.transform.position,transform.position) < distanceLim && !ConflictTest()) {
 			// Cord.inHand is a static variable logging which instance of Cord is currently being held
 			Cord.inHand.Hook(gameObject);
 		}
@@ -42,7 +43,7 @@ public class Hook : MonoBehaviour {
 	// 
 	void OnMouseEnter()
 	{
-		if (Cord.grabbed && Vector3.Distance(grabber.transform.position,transform.position) < Cord.dist && !ConflictTest()) {
+		if (Cord.grabbed && Vector3.Distance(grabber.transform.position,transform.position) < distanceLim && !ConflictTest()) {
 			Cord.inHand.MouseOver(Segment.End);
 		}
 	}
